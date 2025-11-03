@@ -176,7 +176,7 @@ The `IsyerimPosInterface` is bound as a singleton in the service container and a
 - **CI/CD**: GitHub Actions with auto-update CHANGELOG
 
 ### 📋 Package Information
-- **Current Version**: v1.0.2
+- **Current Version**: v1.0.3
 - **Published**: https://packagist.org/packages/apo-bozdag/isyerim-pos
 - **Requirements**: PHP ^8.2, Laravel ^11.0 || ^12.0
 
