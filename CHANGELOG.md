@@ -2,6 +2,54 @@
 
 All notable changes to `isyerim-pos` will be documented in this file.
 
+##  v1.0.3 - Interface Pattern & Code Cleanup - 2025-11-03
+
+### ♻️ Refactoring
+
+Implemented interface-based dependency injection pattern and removed unused scaffold files for a cleaner package structure.
+
+#### What's Changed
+
+- ✨ **Added** `IsyerimPosInterface` contract for better dependency injection support
+- 🔄 **Updated** `IsyerimPos` class to implement `IsyerimPosInterface`
+- 🔧 **Updated** `IsyerimPosServiceProvider` to bind interface as singleton with alias
+- 🗑️ **Removed** unused scaffold files:
+  - `database/factories/ModelFactory.php`
+  - `database/migrations/create_isyerim_pos_table.php.stub`
+  - `resources/views/.gitkeep`
+  - `src/Commands/IsyerimPosCommand.php`
+  
+- 🧹 **Removed** `hasViews()`, `hasMigration()`, `hasCommand()` from ServiceProvider
+- 📦 **Cleaned** `composer.json` autoload configuration
+- 🐛 **Fixed** PHPStan config to remove non-existent database path
+- 📚 **Updated** CLAUDE.md with interface pattern documentation
+
+#### Breaking Changes
+
+✅ **None** - Fully backward compatible via container alias
+
+#### Benefits
+
+- 🧪 Better testability with interface-based dependency injection
+- 🎯 Cleaner package structure without unused boilerplate
+- ✨ Follows Laravel best practices for service container binding
+
+#### Installation
+
+  ```bash
+  composer require apo-bozdag/isyerim-pos
+
+  ```
+Upgrade from v1.0.2
+
+Simply update your composer dependencies:
+
+  ```bash
+  composer update apo-bozdag/isyerim-pos
+
+  ```
+Your existing code will continue to work without any changes.
+
 ## v1.0.2 - PHP 8.2 Compatibility Fix - 2025-11-03
 
 ### 🐛 Bug Fixes
@@ -25,6 +73,7 @@ Fixed PHP 8.2 compatibility by downgrading Pest test framework.
   ```bash
   composer require apo-bozdag/isyerim-pos
 
+
   ```
 ### 📚 Documentation
 
@@ -36,6 +85,7 @@ Simply update your composer dependencies:
 
   ```bash
   composer update apo-bozdag/isyerim-pos
+
 
   ```
 ## 1.0.2 - 2024-11-03
