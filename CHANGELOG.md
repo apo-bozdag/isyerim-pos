@@ -2,30 +2,20 @@
 
 All notable changes to `isyerim-pos` will be documented in this file.
 
-## v1.0.1 - Bug Fixes and CI Improvements - 2025-11-03
+## 1.0.2 - 2024-11-03
 
-### 🐛 Bug Fixes
+### Fixed
+- Downgraded Pest to v3.x for PHP 8.2 compatibility (Pest v4 requires PHP 8.3+)
+- Ensures package works on both PHP 8.2 and 8.3 with Laravel 11 & 12
 
-- Fixed GitHub Actions workflow to work properly in CI environment
-- Fixed ArchTest syntax for proper namespace checking
-- Fixed PHPStan configuration to avoid false positives
+### Changed
+- Updated `pestphp/pest` from ^4.0 to ^3.0
+- Updated `pestphp/pest-plugin-arch` from ^4.0 to ^3.0
+- Updated `pestphp/pest-plugin-laravel` from ^4.0 to ^3.0
 
-### ⚡ Improvements
-
-- Simplified test matrix (PHP 8.2, 8.3 with Laravel 11, 12)
-- Improved package description and keywords for better discoverability
-- Faster CI builds with optimized workflow
-
-### 📦 Installation
-
-  ```bash
-  composer require apo-bozdag/isyerim-pos
-
-  ```
 ## 1.0.1 - 2024-11-03
 
 ### Fixed
-
 - Fixed GitHub Actions workflow to work properly in CI environment
 - Updated test matrix to use PHP 8.2 and 8.3 with prefer-stable only
 - Fixed ArchTest syntax to use `toBeUsedIn()` method for proper namespace checking
@@ -33,7 +23,6 @@ All notable changes to `isyerim-pos` will be documented in this file.
 - Removed Windows testing from CI to improve build speed
 
 ### Changed
-
 - Simplified GitHub Actions test matrix for better CI performance
 - Updated package description and keywords for better discoverability on Packagist
 
