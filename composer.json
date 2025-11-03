@@ -1,10 +1,19 @@
 {
     "name": "apo-bozdag/isyerim-pos",
-    "description": "This is my package isyerim-pos",
+    "description": "Laravel package for IsyerimPOS Payment Gateway API integration with Virtual POS, Physical POS, Marketplace and Wallet support",
     "keywords": [
-        "Abdullah",
         "laravel",
-        "isyerim-pos"
+        "laravel-package",
+        "payment-gateway",
+        "isyerimpos",
+        "virtual-pos",
+        "payment",
+        "3d-secure",
+        "turkey",
+        "turkish-payment-gateway",
+        "pos",
+        "marketplace",
+        "wallet"
     ],
     "homepage": "https://github.com/apo-bozdag/isyerim-pos",
     "license": "MIT",
