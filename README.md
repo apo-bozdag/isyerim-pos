@@ -239,6 +239,151 @@ $collection = IsyerimPos::wallet()->collectionRequest([
 ]);
 ```
 
+## API Models & Enums
+
+The package provides PHP enums for working with IsyerimPOS API responses. These enums offer type-safe handling of API values with helpful utility methods.
+
+### Available Enums
+
+#### CardType
+
+Card classification enum (`Abdullah\IsyerimPos\Enums\CardType`):
+
+```php
+use Abdullah\IsyerimPos\Enums\CardType;
+
+CardType::UNDEFINED        // 0
+CardType::CREDIT_CARD      // 1
+CardType::DEBIT_CARD       // 2
+CardType::ACQUIRING        // 3
+CardType::PREPAID          // 4
+
+// Usage example
+$cardType = CardType::tryFromValue($apiResponse['cardType']);
+echo $cardType->label(); // "Credit Card"
+```
+
+#### CardSchema
+
+Card network/scheme enum (`Abdullah\IsyerimPos\Enums\CardSchema`):
+
+```php
+use Abdullah\IsyerimPos\Enums\CardSchema;
+
+CardSchema::UNDEFINED             // 0
+CardSchema::VISA                  // 1
+CardSchema::MASTERCARD            // 2
+CardSchema::AMEX                  // 3
+CardSchema::DINERS_CLUB           // 4
+CardSchema::JCB                   // 5
+CardSchema::TROY                  // 6
+CardSchema::UNION_PAY             // 7
+CardSchema::PROPRIETARY_DOMESTIC  // 8
+
+// Usage example
+$schema = CardSchema::tryFromValue($apiResponse['cardSchema']);
+echo $schema->label(); // "Visa"
+```
+
+#### CardBrand
+
+Turkish card programs enum (`Abdullah\IsyerimPos\Enums\CardBrand`):
+
+```php
+use Abdullah\IsyerimPos\Enums\CardBrand;
+
+CardBrand::UNDEFINED      // 0
+CardBrand::ADVANTAGE      // 1
+CardBrand::AXESS          // 2
+CardBrand::BONUS          // 3
+CardBrand::MAXIMUM        // 6
+CardBrand::PARAF          // 7
+CardBrand::WORLD          // 8
+// ... and more (18 total brands)
+
+// Usage example
+$brand = CardBrand::tryFromValue($apiResponse['cardBrand']);
+echo $brand->label(); // "Bonus"
+```
+
+#### ProcessStatus
+
+Transaction lifecycle state enum (`Abdullah\IsyerimPos\Enums\ProcessStatus`):
+
+```php
+use Abdullah\IsyerimPos\Enums\ProcessStatus;
+
+ProcessStatus::UNDEFINED                  // 0
+ProcessStatus::PENDING                    // 1
+ProcessStatus::VERIFIED                   // 2
+ProcessStatus::SUCCESSFUL                 // 4
+ProcessStatus::FAILED                     // 5
+ProcessStatus::CANCELLED                  // 6
+ProcessStatus::CANCELLATION_IN_PROGRESS   // 7
+ProcessStatus::REFUND_IN_PROGRESS         // 8
+ProcessStatus::CHARGEBACK_IN_PROGRESS     // 9
+ProcessStatus::RISKY                      // 10
+
+// Usage example with helper methods
+$status = ProcessStatus::tryFromValue($apiResponse['status']);
+
+if ($status->isSuccessful()) {
+    // Payment completed successfully
+}
+
+if ($status->isPending()) {
+    // Payment is still processing
+}
+
+if ($status->isFinal()) {
+    // Payment reached a final state (successful, failed, or cancelled)
+}
+
+echo $status->label(); // "Successful"
+```
+
+### API Response Models
+
+The IsyerimPOS API returns standardized response models:
+
+#### Result/Pay Model
+Standard response wrapper containing:
+- Operation completion status
+- Success/error messages
+- Error codes and error collections
+- Additional response data
+
+#### CardInfo Model
+Payment card information:
+- Cardholder name
+- Card number
+- Expiration month/year
+- CVV security code
+
+#### CustomerInfo Model
+Customer details:
+- Name and email
+- Physical address
+- Phone number
+- Optional description/notes
+
+#### Product Model
+Line item information:
+- Product name
+- Quantity count
+- Per-unit pricing
+
+#### Payment Model
+Transfer/payment details:
+- Account holder name
+- IBAN
+- Payment description
+- Amount
+- Sub-merchant identifier
+- External customer reference
+
+For complete model definitions and additional details, see the [official API documentation](https://dev.isyerimpos.com/modeller).
+
 ## Error Handling
 
 The package throws specific exceptions for different error scenarios:
