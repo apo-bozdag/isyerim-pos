@@ -1,0 +1,32 @@
+<?php
+
+namespace Abdullah\IsyerimPos;
+
+use Abdullah\IsyerimPos\Commands\IsyerimPosCommand;
+use Spatie\LaravelPackageTools\Package;
+use Spatie\LaravelPackageTools\PackageServiceProvider;
+
+class IsyerimPosServiceProvider extends PackageServiceProvider
+{
+    public function configurePackage(Package $package): void
+    {
+        /*
+         * This class is a Package Service Provider
+         *
+         * More info: https://github.com/spatie/laravel-package-tools
+         */
+        $package
+            ->name('isyerim-pos')
+            ->hasConfigFile()
+            ->hasViews()
+            ->hasMigration('create_isyerim_pos_table')
+            ->hasCommand(IsyerimPosCommand::class);
+    }
+
+    public function packageRegistered(): void
+    {
+        $this->app->singleton(IsyerimPos::class, function () {
+            return new IsyerimPos;
+        });
+    }
+}

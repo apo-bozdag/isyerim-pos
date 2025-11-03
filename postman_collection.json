@@ -1,0 +1,1043 @@
+{
+	"info": {
+		"_postman_id": "9cec94db-f59d-48af-aef2-312049597bc0",
+		"name": "IsyerimPOSAPI",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "13786173",
+		"_collection_link": "https://faturamatik.postman.co/workspace/Fm-WorkSpace-1~901ec591-141c-4b70-8aa6-a495ea2a7c03/collection/13786173-9cec94db-f59d-48af-aef2-312049597bc0?action=share&source=collection_link&creator=13786173"
+	},
+	"item": [
+		{
+			"name": "SanalPOS API",
+			"item": [
+				{
+					"name": "1-Taksit Seçenekleri",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "MerchantId",
+								"value": "{{MerchantId}}",
+								"type": "text"
+							},
+							{
+								"key": "UserId",
+								"value": "{{UserId}}",
+								"type": "text"
+							},
+							{
+								"key": "ApiKey",
+								"value": "{{ApiKey}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"CardNumber\" : \"5818775818772285\", \r\n\t\"Amount\" : 10.00, \r\n\t\"ReflectCost\" : true \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{apiUrl}}getInstallments",
+							"host": [
+								"{{apiUrl}}getInstallments"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "2-Ödeme İsteği",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "MerchantId",
+								"value": "{{MerchantId}}",
+								"type": "text"
+							},
+							{
+								"key": "UserId",
+								"value": "{{UserId}}",
+								"type": "text"
+							},
+							{
+								"key": "ApiKey",
+								"value": "{{ApiKey}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"ReturnUrl\": \"https://isyeriadresi.com/payresult\",\r\n  \"OrderId\": \"SIPARIS_NO\",\r\n  \"ClientIp\": \"123.123.123.123\",\r\n  \"Installment\": 1,\r\n  \"Amount\": 11,\r\n  \"Is3D\": true,\r\n  \"IsAutoCommit\": false,\r\n  \"CardInfo\": {\r\n    \"CardOwner\": \"KART SAHIBI\",\r\n    \"CardNo\": \"5818775818772285\",\r\n    \"Month\": \"12\",\r\n    \"Year\": \"26\",\r\n    \"Cvv\": \"001\"\r\n  },\r\n  \"CustomerInfo\": {\r\n    \"Name\": \"MUSTERI ADI\",\r\n    \"Phone\": \"5301230011\",\r\n    \"Email\": \"test@test.com\",\r\n    \"Address\": \"Adres Bilgisi\",\r\n    \"Description\": \"İşlem Açıklaması\"\r\n  },\r\n  \"Products\": [\r\n    {\r\n      \"Name\": \"URUN ADI\",\r\n      \"Count\": 1,\r\n      \"UnitPrice\": 2\r\n    }\r\n  ],\r\n  \"Payments\": [\r\n    {\r\n      \"CustomerId\":10093,\r\n      \"ExtCustomerId\":\"123453\",\r\n      \"AccountOwner\": \"HESAP SAHIBI\",\r\n      \"IBAN\": \"TR720006701000000078840200\",\r\n      \"Description\": \"Islem Aciklamasi\",\r\n      \"Amount\": 10\r\n    }\r\n  ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{apiUrl}}payRequest3d",
+							"host": [
+								"{{apiUrl}}payRequest3d"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "2.1 Ödeme Tamamlama",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "MerchantId",
+								"value": "{{MerchantId}}",
+								"type": "text"
+							},
+							{
+								"key": "UserId",
+								"value": "{{UserId}}",
+								"type": "text"
+							},
+							{
+								"key": "ApiKey",
+								"value": "{{ApiKey}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{apiUrl}}payComplete?uid=917455C5-0ABF-4E26-B53C-C70B758E346A&key=123123",
+							"host": [
+								"{{apiUrl}}payComplete"
+							],
+							"query": [
+								{
+									"key": "uid",
+									"value": "917455C5-0ABF-4E26-B53C-C70B758E346A"
+								},
+								{
+									"key": "key",
+									"value": "123123"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "3-Sonuç Kontrolü",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "MerchantId",
+								"value": "{{MerchantId}}",
+								"type": "text"
+							},
+							{
+								"key": "UserId",
+								"value": "{{UserId}}",
+								"type": "text"
+							},
+							{
+								"key": "ApiKey",
+								"value": "{{ApiKey}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{apiUrl}}payResultCheck?uid=917455C5-0ABF-4E26-B53C-C70B758E346A",
+							"host": [
+								"{{apiUrl}}payResultCheck"
+							],
+							"query": [
+								{
+									"key": "uid",
+									"value": "917455C5-0ABF-4E26-B53C-C70B758E346A"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "4-Komisyon Oranları",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "MerchantId",
+								"value": "{{MerchantId}}",
+								"type": "text"
+							},
+							{
+								"key": "UserId",
+								"value": "{{UserId}}",
+								"type": "text"
+							},
+							{
+								"key": "ApiKey",
+								"value": "{{ApiKey}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{apiUrl}}commissions",
+							"host": [
+								"{{apiUrl}}commissions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "5-İptal Talebi",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "MerchantId",
+								"value": "{{MerchantId}}",
+								"type": "text"
+							},
+							{
+								"key": "UserId",
+								"value": "{{UserId}}",
+								"type": "text"
+							},
+							{
+								"key": "ApiKey",
+								"value": "{{ApiKey}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"uid\" : \"2739b82e-e354-4c1f-a46d-79e7a5ff3303\", \r\n\t\"description\" : \"api iptal testi\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{apiUrl}}cancelRequest",
+							"host": [
+								"{{apiUrl}}cancelRequest"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "6-İade Talebi",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "MerchantId",
+								"value": "{{MerchantId}}",
+								"type": "text"
+							},
+							{
+								"key": "UserId",
+								"value": "{{UserId}}",
+								"type": "text"
+							},
+							{
+								"key": "ApiKey",
+								"value": "{{ApiKey}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"uid\" : \"637ee3e0-3aeb-46e0-866a-babb1ff515ee\", \r\n\t\"description\" : \"api iptal testi\",\r\n    \"amount\" : 0\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{apiUrl}}refundRequest",
+							"host": [
+								"{{apiUrl}}refundRequest"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "7-İşlem Raporu",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "MerchantId",
+								"value": "{{MerchantId}}",
+								"type": "text"
+							},
+							{
+								"key": "UserId",
+								"value": "{{UserId}}",
+								"type": "text"
+							},
+							{
+								"key": "ApiKey",
+								"value": "{{ApiKey}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"uid\" : \"2739b82e-e354-4c1f-a46d-79e7a5ff3303\", \r\n\t\"description\" : \"api iptal testi\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{apiUrl}}transactions?startDate=2022-10-02&endDate=2022-10-05",
+							"host": [
+								"{{apiUrl}}transactions"
+							],
+							"query": [
+								{
+									"key": "startDate",
+									"value": "2022-10-02"
+								},
+								{
+									"key": "endDate",
+									"value": "2022-10-05"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "8-Ödeme Linki Oluştur",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "MerchantId",
+								"value": "{{MerchantId}}",
+								"type": "text"
+							},
+							{
+								"key": "UserId",
+								"value": "{{UserId}}",
+								"type": "text"
+							},
+							{
+								"key": "ApiKey",
+								"value": "{{ApiKey}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"LifeTime\": 15,\r\n    \"Amount\": 10,\r\n    \"ReturnUrl\": \"https://satpa.com.tr?oo=serkan-kacar\",\r\n    \"InstallmentActive\": false,\r\n    \"Description\": \"Test\",\r\n    \"SendSms\": false,\r\n    \"SendMail\": false,\r\n    \"Customer\": {\r\n        \"Name\": \"ALİ\",\r\n        \"Surname\": \"VELİ\",\r\n        \"Phone\": \"5112223344\",\r\n        \"Email\": \"\",\r\n        \"City\": \"\",\r\n        \"Address\": \"\",\r\n        \"Description\": \"\"\r\n    },\r\n    \"Products\": [\r\n        {\r\n            \"Name\": \"Test Ürünü\",\r\n            \"Count\": 1,\r\n            \"UnitPrice\": 8\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{apiUrl}}createPayLink",
+							"host": [
+								"{{apiUrl}}createPayLink"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "8-Ödeme Linki Oluştur Copy",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "MerchantId",
+								"value": "{{MerchantId}}",
+								"type": "text"
+							},
+							{
+								"key": "UserId",
+								"value": "{{UserId}}",
+								"type": "text"
+							},
+							{
+								"key": "ApiKey",
+								"value": "{{ApiKey}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"LifeTime\": 15,\r\n    \"Amount\": 10,\r\n    \"ReturnUrl\": \"https://satpa.com.tr\",\r\n    \"InstallmentActive\": false,\r\n    \"Description\": \"Test\",\r\n    \"SendSms\": false,\r\n    \"SendMail\": true,\r\n    \"Customer\": {\r\n        \"Name\": \"ALİ\",\r\n        \"Surname\": \"VELİ\",\r\n        \"Phone\": \"5372237182\",\r\n        \"Email\": \"skaranci@faturamatik.com.tr\",\r\n        \"City\": \"\",\r\n        \"Address\": \"\",\r\n        \"Description\": \"\"\r\n    },\r\n    \"Products\": [\r\n        {\r\n            \"Name\": \"Test Ürünü\",\r\n            \"Count\": 1,\r\n            \"UnitPrice\": 8\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{apiUrl}}createPayLink",
+							"host": [
+								"{{apiUrl}}createPayLink"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "POS Cihazı API",
+			"item": [
+				{
+					"name": "1-POS Cihazları",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "MerchantId",
+								"value": "{{MerchantId}}",
+								"type": "text"
+							},
+							{
+								"key": "UserId",
+								"value": "{{UserId}}",
+								"type": "text"
+							},
+							{
+								"key": "ApiKey",
+								"value": "{{ApiKey}}",
+								"type": "text"
+							},
+							{
+								"key": "Tid",
+								"value": "12345678",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "{{apiUrl}}terminals",
+							"host": [
+								"{{apiUrl}}terminals"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "2-Sepet Oluştur",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "MerchantId",
+								"value": "{{MerchantId}}",
+								"type": "text"
+							},
+							{
+								"key": "UserId",
+								"value": "{{UserId}}",
+								"type": "text"
+							},
+							{
+								"key": "ApiKey",
+								"value": "{{ApiKey}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Name\": \"MASA-1\", //default null; pos cihazına birden fazla talep gönderilirse ayırt edici isim\r\n    \"TerminalId\": \"12345678\", //default null; hedef pos cihazı belirtilmek istenirse zorunlu\r\n    \"Direct\": true, //default false; pos cihazı üzerinde ödeme sayfasının otomatik olarak görüntülenmesi istenirse\r\n    \"PaymentType\": 0, //default 0; 0-kredi kartı, 1-nakit\r\n    \"CashAmount\": 0,  //default 0; Nakit ödenecek tutar\r\n    \"Items\": [\r\n        {\r\n            \"Count\": 1,\r\n            \"Name\": \"Ürün / Hizmet Adı\",\r\n            \"TaxValue\": 0, //kdv oranı\r\n            \"UnitPrice\": 100\r\n        }\r\n    ],\r\n    \"BuyerInfo\": // e-fiş, e-fatura için gerekli bilgiler (belge istenmiyorsa zorunlu değil)\r\n    {\r\n        \"IdentityNR\": \"1234567890\", //Vergi no veya TC Kimlik no (Zorunlu)\r\n        \"Name\": \"Ali\", //müşteri adı (Zorunlu)\r\n        \"Surname\": \"Kaya\", //müşteri soyadı (Zorunlu)\r\n        \"PhoneNumber\": \"5320000000\", //müşteri telefon numarası\r\n        \"EMail\": \"demo@mail.com\", //müşteri eposta adresi\r\n        \"Title\": \"Demo Şirket Ltd. Şti.\", //şirket ise ünvan bilgisi\r\n        \"TaxOffice\": \"KÜÇÜKYALI\", //müşteri vergi dairesi (Zorunlu)\r\n        \"AddressInfo\" :\r\n                {\r\n                \"City\": \"İstanbul\", //müşteri ili (Zorunlu)\r\n                \"District\": \"Maltepe\", //müşteri ilçesi (Zorunlu)\r\n                \"StreetName\": \"Akın Sk\", //cadde-sokak adı\r\n                \"BuildingNumber\": \"10\", //bina numarası\r\n                \"DoorNumber\": \"2\" //daire numarası\r\n                }\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{apiUrl}}createCart",
+							"host": [
+								"{{apiUrl}}createCart"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "3-Sepet Sil",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "MerchantId",
+								"value": "{{MerchantId}}",
+								"type": "text"
+							},
+							{
+								"key": "UserId",
+								"value": "{{UserId}}",
+								"type": "text"
+							},
+							{
+								"key": "ApiKey",
+								"value": "{{ApiKey}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{apiUrl}}getCarts",
+							"host": [
+								"{{apiUrl}}getCarts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "4-Sepet Listele",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "MerchantId",
+								"value": "{{MerchantId}}",
+								"type": "text"
+							},
+							{
+								"key": "UserId",
+								"value": "{{UserId}}",
+								"type": "text"
+							},
+							{
+								"key": "ApiKey",
+								"value": "{{ApiKey}}",
+								"type": "text"
+							},
+							{
+								"key": "Tid",
+								"value": "12345678",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "{{apiUrl}}getCarts?tid=1234567",
+							"host": [
+								"{{apiUrl}}getCarts"
+							],
+							"query": [
+								{
+									"key": "tid",
+									"value": "1234567"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Pazaryeri",
+			"item": [
+				{
+					"name": "1-Alt Üye İşyeri Ekle",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "MerchantId",
+								"value": "{{MerchantId}}",
+								"type": "text"
+							},
+							{
+								"key": "UserId",
+								"value": "{{UserId}}",
+								"type": "text"
+							},
+							{
+								"key": "ApiKey",
+								"value": "{{ApiKey}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"CreateUser\" : true,\r\n    \"externalCustomerId\": null,\r\n    \"companyName\": \"DEMO MAGAZA 6\",\r\n    \"shopName\": \"DEMO MAGAZA 6\",\r\n    \"authorizedPerson\": \"TEST USER VELI\",\r\n    \"tcIdentityNumber\": \"12345678973\",\r\n    \"taxNumber\": \"1234567890\",\r\n    \"taxOffice\": \"MALTEPE\",\r\n    \"email\": \"test@test.com\",\r\n    \"gsmNumber\": \"5330001125\",\r\n    \"webAddress\": \"www.demomagaza.com\",\r\n    \"iban\": \"TR1234567890112233445\",\r\n    \"accountOwner\": \"HESAP SAHIBI\",\r\n    \"province\": \"ISTANBUL\",\r\n    \"provinceCode\": 34,\r\n    \"transactionLowerLimit\": null,\r\n    \"transactionUpperLimit\": null,\r\n    \"transactionTotalLimit\": null,\r\n    \"valor\": 10,\r\n    \"PaymentDay\": 5\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:21374/v1/addSubmerchant",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "21374",
+							"path": [
+								"v1",
+								"addSubmerchant"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "1-Alt Üye İşyeri Ekle Copy",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "MerchantId",
+								"value": "{{MerchantId}}",
+								"type": "text"
+							},
+							{
+								"key": "UserId",
+								"value": "{{UserId}}",
+								"type": "text"
+							},
+							{
+								"key": "ApiKey",
+								"value": "{{ApiKey}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"CreateUser\" : true,\r\n    \"externalCustomerId\": null,\r\n    \"companyName\": \"DEMO MAGAZA 6\",\r\n    \"shopName\": \"DEMO MAGAZA 6\",\r\n    \"authorizedPerson\": \"TEST USER VELI\",\r\n    \"tcIdentityNumber\": \"12345678973\",\r\n    \"taxNumber\": \"1234567890\",\r\n    \"taxOffice\": \"MALTEPE\",\r\n    \"email\": \"test@test.com\",\r\n    \"gsmNumber\": \"5330001125\",\r\n    \"webAddress\": \"www.demomagaza.com\",\r\n    \"iban\": \"TR1234567890112233445\",\r\n    \"accountOwner\": \"HESAP SAHIBI\",\r\n    \"province\": \"ISTANBUL\",\r\n    \"provinceCode\": 34,\r\n    \"transactionLowerLimit\": null,\r\n    \"transactionUpperLimit\": null,\r\n    \"transactionTotalLimit\": null,\r\n    \"valor\": 10,\r\n    \"PaymentDay\": 5\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:21374/v1/addSubmerchant",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "21374",
+							"path": [
+								"v1",
+								"addSubmerchant"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "2-Alt Üye İşyeri Güncelle",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "MerchantId",
+								"value": "{{MerchantId}}",
+								"type": "text"
+							},
+							{
+								"key": "UserId",
+								"value": "{{UserId}}",
+								"type": "text"
+							},
+							{
+								"key": "ApiKey",
+								"value": "{{ApiKey}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 10142,\r\n    \"externalCustomerId\": null,\r\n    \"companyName\": \"DEMO MAGAZA 5\",\r\n    \"shopName\": \"DEMO MAGAZA 5\",\r\n    \"authorizedPerson\": \"TEST USER\",\r\n    \"tcIdentityNumber\": \"12345678951\",\r\n    \"taxNumber\": \"1234567890\",\r\n    \"taxOffice\": \"MALTEPE\",\r\n    \"email\": \"test@test.com\",\r\n    \"gsmNumber\": \"5330001122\",\r\n    \"webAddress\": \"www.demomagaza.com\",\r\n    \"iban\": \"TR1234567890112233445\",\r\n    \"accountOwner\": \"HESAP SAHIBI\",\r\n    \"province\": \"ISTANBUL\",\r\n    \"provinceCode\": 34,\r\n    \"transactionLowerLimit\": null,\r\n    \"transactionUpperLimit\": null,\r\n    \"transactionTotalLimit\": null,\r\n    \"valor\": 10,\r\n    \"PaymentDay\": 5\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{apiUrl}}addSubmerchant",
+							"host": [
+								"{{apiUrl}}addSubmerchant"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "3-Ödeme Durumu",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "MerchantId",
+								"value": "{{MerchantId}}",
+								"type": "text"
+							},
+							{
+								"key": "UserId",
+								"value": "{{UserId}}",
+								"type": "text"
+							},
+							{
+								"key": "ApiKey",
+								"value": "{{ApiKey}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{apiUrl}}paymentStatus?uid=44E34666-D5D4-406E-80CC-09FD65F377AB",
+							"host": [
+								"{{apiUrl}}paymentStatus"
+							],
+							"query": [
+								{
+									"key": "uid",
+									"value": "44E34666-D5D4-406E-80CC-09FD65F377AB"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "4-Ödeme Listesi",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "MerchantId",
+								"value": "{{MerchantId}}",
+								"type": "text"
+							},
+							{
+								"key": "UserId",
+								"value": "{{UserId}}",
+								"type": "text"
+							},
+							{
+								"key": "ApiKey",
+								"value": "{{ApiKey}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{apiUrl}}payments?date=2022-04-19",
+							"host": [
+								"{{apiUrl}}payments"
+							],
+							"query": [
+								{
+									"key": "date",
+									"value": "2022-04-19"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "5-Token Oluşturma",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "MerchantId",
+								"value": "{{MerchantId}}",
+								"type": "text"
+							},
+							{
+								"key": "UserId",
+								"value": "{{UserId}}",
+								"type": "text"
+							},
+							{
+								"key": "ApiKey",
+								"value": "{{ApiKey}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{apiUrl}}createToken?userId=12&extUserId=23434",
+							"host": [
+								"{{apiUrl}}createToken"
+							],
+							"query": [
+								{
+									"key": "userId",
+									"value": "12"
+								},
+								{
+									"key": "extUserId",
+									"value": "23434"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Cüzdan",
+			"item": [
+				{
+					"name": "1-Cüzdan Hesapları",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "MerchantId",
+								"value": "{{MerchantId}}",
+								"type": "text"
+							},
+							{
+								"key": "UserId",
+								"value": "{{UserId}}",
+								"type": "text"
+							},
+							{
+								"key": "ApiKey",
+								"value": "{{ApiKey}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{apiUrl}}walletAccounts",
+							"host": [
+								"{{apiUrl}}walletAccounts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "2-Hesap Bakiyesi",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "MerchantId",
+								"value": "{{MerchantId}}",
+								"type": "text"
+							},
+							{
+								"key": "UserId",
+								"value": "{{UserId}}",
+								"type": "text"
+							},
+							{
+								"key": "ApiKey",
+								"value": "{{ApiKey}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{apiUrl}}walletBalance?walletId=143333",
+							"host": [
+								"{{apiUrl}}walletBalance"
+							],
+							"query": [
+								{
+									"key": "walletId",
+									"value": "143333"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "3-Hesap Hareketleri",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "MerchantId",
+								"value": "{{MerchantId}}",
+								"type": "text"
+							},
+							{
+								"key": "UserId",
+								"value": "{{UserId}}",
+								"type": "text"
+							},
+							{
+								"key": "ApiKey",
+								"value": "{{ApiKey}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{apiUrl}}walletTransactions?startDate=2023-04-01&endDate=2023-04-27&walletId=143332",
+							"host": [
+								"{{apiUrl}}walletTransactions"
+							],
+							"query": [
+								{
+									"key": "startDate",
+									"value": "2023-04-01"
+								},
+								{
+									"key": "endDate",
+									"value": "2023-04-27"
+								},
+								{
+									"key": "walletId",
+									"value": "143332"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "4-Para Transferi",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "MerchantId",
+								"value": "{{MerchantId}}",
+								"type": "text"
+							},
+							{
+								"key": "UserId",
+								"value": "{{UserId}}",
+								"type": "text"
+							},
+							{
+								"key": "ApiKey",
+								"value": "{{ApiKey}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"identityNo\": \"37015382616\",\r\n  \"amount\": 20,\r\n  \"url\": \"https:\\\\/\\\\/webhook.site\\\\/5333ef60-8029-4925-b8c5-de2a03b0a9cf\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{apiUrl}}collectionRequest",
+							"host": [
+								"{{apiUrl}}collectionRequest"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Yükleme Talebi",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "MerchantId",
+								"value": "{{MerchantId}}",
+								"type": "text"
+							},
+							{
+								"key": "UserId",
+								"value": "{{UserId}}",
+								"type": "text"
+							},
+							{
+								"key": "ApiKey",
+								"value": "{{ApiKey}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"identityNo\": \"37015382616\",\r\n  \"amount\": 20,\r\n  \"url\": \"https:\\\\/\\\\/webhook.site\\\\/5333ef60-8029-4925-b8c5-de2a03b0a9cf\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{apiUrl}}collectionRequest",
+							"host": [
+								"{{apiUrl}}collectionRequest"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "apiUrl",
+			"value": "https://apitest.isyerimpos.com/v1/"
+		},
+		{
+			"key": "MerchantId",
+			"value": "11039"
+		},
+		{
+			"key": "UserId",
+			"value": "445"
+		},
+		{
+			"key": "ApiKey",
+			"value": "AQAAAAEAACcQAAAAEBfEWS9XGrZta1wfYC1qeTCA2gJIbDH1+rQEdrY8k4qE8EFtWf3i0Axyb4jY2uReyw=="
+		}
+	]
+}
