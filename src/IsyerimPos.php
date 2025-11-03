@@ -3,12 +3,13 @@
 namespace Abdullah\IsyerimPos;
 
 use Abdullah\IsyerimPos\Client\IsyerimPosClient;
+use Abdullah\IsyerimPos\Contracts\IsyerimPosInterface;
 use Abdullah\IsyerimPos\Services\MarketplaceService;
 use Abdullah\IsyerimPos\Services\PhysicalPosService;
 use Abdullah\IsyerimPos\Services\VirtualPosService;
 use Abdullah\IsyerimPos\Services\WalletService;
 
-class IsyerimPos
+class IsyerimPos implements IsyerimPosInterface
 {
     protected IsyerimPosClient $client;
 

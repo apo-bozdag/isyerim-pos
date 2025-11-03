@@ -43,17 +43,20 @@ vendor/bin/pest --filter="test_name"            # Run specific test by name
 ### Package Structure
 
 - **Namespace**: `Abdullah\IsyerimPos`
-- **Service Provider**: `IsyerimPosServiceProvider` - Registers config, views, migrations, and commands
+- **Interface**: `IsyerimPosInterface` - Contract for main service
+- **Service Provider**: `IsyerimPosServiceProvider` - Registers interface binding and config
 - **Facade**: `IsyerimPos` facade available for static access
-- **Main Class**: `IsyerimPos` - Currently empty, implementation pending
+- **Main Class**: `IsyerimPos implements IsyerimPosInterface` - Factory for service instances
+- **HTTP Client**: `IsyerimPosClient` - Handles authentication and HTTP requests
+- **Services**: Four service classes for different API modules
+- **Exceptions**: Custom exception hierarchy for error handling
 
 ### Service Provider Registration
 
 The package auto-registers via Laravel's package discovery:
-- Config file: `config/isyerim-pos.php`
-- Views: `resources/views/` (publishable)
-- Migration: `database/migrations/create_isyerim_pos_table.php.stub`
-- Command: `IsyerimPosCommand` (signature: `isyerim-pos`)
+- Config file: `config/isyerim-pos.php` (publishable)
+- Interface binding: `IsyerimPosInterface::class` → singleton
+- Alias: `IsyerimPos::class` → `IsyerimPosInterface::class`
 
 ### API Integration Structure
 
@@ -112,18 +115,20 @@ Base URL: `https://apitest.isyerimpos.com/v1/`
 
 ### Code Style
 
-- PHP 8.4+ required
+- PHP 8.2+ required (supports PHP 8.2 and 8.3)
 - Laravel 11.x or 12.x compatibility
 - Use Laravel Pint for formatting (runs via `composer format`)
-- PHPStan level 5 for static analysis
+- PHPStan level 5 for static analysis (analyzes `src/` and `database/`, excludes `config/`)
 - Octane compatibility check enabled
 
 ### Testing
 
-- Framework: Pest PHP 4.0
+- Framework: Pest PHP 3.x (v3.0 for PHP 8.2+ compatibility)
 - Test namespace: `Abdullah\IsyerimPos\Tests`
 - Base test case: `tests/TestCase.php` extends Orchestra Testbench
+- Test credentials pre-configured in `getEnvironmentSetUp()` method
 - Architecture tests available via Pest Arch plugin in `tests/ArchTest.php`
+- CI runs tests on PHP 8.2 & 8.3 with Laravel 11 & 12
 
 ### Configuration Management
 
@@ -132,11 +137,64 @@ When adding new config values:
 2. Document in README
 3. Ensure publishable via `php artisan vendor:publish --tag="isyerim-pos-config"`
 
-### Database Migrations
+### Dependency Injection
 
-Migration stub located at: `database/migrations/create_isyerim_pos_table.php.stub`
-Publishable via: `php artisan vendor:publish --tag="isyerim-pos-migrations"`
+The package uses interface-based dependency injection for flexibility and testability:
 
-## PHP Version
+```php
+// In your service providers or controllers
+use Abdullah\IsyerimPos\Contracts\IsyerimPosInterface;
 
-Requires PHP ^8.4 - ensure type hints and modern PHP features are used appropriately.
+public function __construct(
+    protected IsyerimPosInterface $isyerimPos
+) {}
+
+// Or use the concrete class (aliased to interface)
+use Abdullah\IsyerimPos\IsyerimPos;
+
+public function __construct(
+    protected IsyerimPos $isyerimPos
+) {}
+```
+
+The `IsyerimPosInterface` is bound as a singleton in the service container and aliased to the concrete `IsyerimPos` class for backward compatibility.
+
+## Implementation Status
+
+### ✅ Completed
+- **Interface Contract** (`src/Contracts/IsyerimPosInterface.php`): Interface for dependency injection
+- **HTTP Client** (`src/Client/IsyerimPosClient.php`): Authentication, retry mechanism, logging
+- **Services** (all implemented):
+  - `VirtualPosService`: 9 endpoints for online payments
+  - `PhysicalPosService`: 4 endpoints for POS devices
+  - `MarketplaceService`: 4 endpoints for sub-merchants
+  - `WalletService`: 4 endpoints for wallet operations
+- **Exceptions**: Complete hierarchy (`IsyerimPosException`, `AuthenticationException`, `PaymentException`, `ApiException`)
+- **Main Class** (`IsyerimPos implements IsyerimPosInterface`): Factory pattern with lazy-loaded services
+- **Service Provider**: Interface binding with singleton and alias for backward compatibility
+- **Testing**: 7 tests with 11 assertions, all passing
+- **CI/CD**: GitHub Actions with auto-update CHANGELOG
+
+### 📋 Package Information
+- **Current Version**: v1.0.2
+- **Published**: https://packagist.org/packages/apo-bozdag/isyerim-pos
+- **Requirements**: PHP ^8.2, Laravel ^11.0 || ^12.0
+
+## Coding Standards
+
+### Naming Conventions
+- Use descriptive variable names
+- Service methods follow API endpoint naming (camelCase)
+- Configuration keys use snake_case
+- Class names use PascalCase
+
+### Error Handling
+- Always throw specific exceptions from `src/Exceptions/`
+- Use `AuthenticationException` for credential issues
+- Use `PaymentException` for payment-specific errors
+- Use `ApiException` for general API failures
+
+### Documentation
+- All public methods must have PHPDoc with parameter types
+- Complex array parameters use PHPDoc shape syntax
+- Include usage examples in method docblocks when helpful
