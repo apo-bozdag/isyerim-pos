@@ -2,6 +2,19 @@
 
 All notable changes to `isyerim-pos` will be documented in this file.
 
+## 1.0.1 - 2024-11-03
+
+### Fixed
+- Fixed GitHub Actions workflow to work properly in CI environment
+- Updated test matrix to use PHP 8.2 and 8.3 with prefer-stable only
+- Fixed ArchTest syntax to use `toBeUsedIn()` method for proper namespace checking
+- Excluded config directory from PHPStan analysis to avoid false positive env() warnings
+- Removed Windows testing from CI to improve build speed
+
+### Changed
+- Simplified GitHub Actions test matrix for better CI performance
+- Updated package description and keywords for better discoverability on Packagist
+
 ## 1.0.0 - 2024-11-03
 
 ### Added
