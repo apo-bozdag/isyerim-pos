@@ -2,7 +2,52 @@
 
 All notable changes to `isyerim-pos` will be documented in this file.
 
-##  v1.0.3 - Interface Pattern & Code Cleanup - 2025-11-03
+## v1.1.0 - API Response Enums - 2025-11-03
+
+### 🎉 What's New
+
+This release adds type-safe PHP enums for working with IsyerimPOS API response values.
+
+#### ✨ New Features
+
+##### PHP Enums (`src/Enums/`)
+
+- **CardType** - Card classification (credit card, debit card, prepaid, etc.)
+- **CardSchema** - Card networks (Visa, MasterCard, Troy, Amex, etc.)
+- **CardBrand** - Turkish card programs (Bonus, Axess, Maximum, Paraf, World, etc.)
+- **ProcessStatus** - Transaction lifecycle states with helper methods
+
+##### Enum Features
+
+- `label()` - Get human-readable names
+- `tryFromValue()` - Safe value conversion (returns null on invalid values)
+- **ProcessStatus helpers**: `isSuccessful()`, `isFailed()`, `isPending()`, `isFinal()`
+
+#### 📖 Usage Example
+
+  ```php
+  use Abdullah\IsyerimPos\Enums\ProcessStatus;
+use Abdullah\IsyerimPos\Facades\IsyerimPos;
+
+$result = IsyerimPos::virtualPos()->payResultCheck(uid: 'xxx');
+
+// Convert API integer value to enum
+$status = ProcessStatus::tryFromValue($result['status']);
+
+if ($status?->isSuccessful()) {
+    echo "Payment successful: " . $status->label();
+}
+
+  ```
+📚 Documentation
+
+Complete enum documentation and API model descriptions added to README.
+
+⚡ Backward Compatibility
+
+All enums are 100% backward compatible and optional to use. Existing code will continue to work without any changes.
+
+## v1.0.3 - Interface Pattern & Code Cleanup - 2025-11-03
 
 ### ♻️ Refactoring
 
@@ -11,18 +56,26 @@ Implemented interface-based dependency injection pattern and removed unused scaf
 #### What's Changed
 
 - ✨ **Added** `IsyerimPosInterface` contract for better dependency injection support
+  
 - 🔄 **Updated** `IsyerimPos` class to implement `IsyerimPosInterface`
+  
 - 🔧 **Updated** `IsyerimPosServiceProvider` to bind interface as singleton with alias
+  
 - 🗑️ **Removed** unused scaffold files:
+  
   - `database/factories/ModelFactory.php`
   - `database/migrations/create_isyerim_pos_table.php.stub`
   - `resources/views/.gitkeep`
   - `src/Commands/IsyerimPosCommand.php`
   
 - 🧹 **Removed** `hasViews()`, `hasMigration()`, `hasCommand()` from ServiceProvider
+  
 - 📦 **Cleaned** `composer.json` autoload configuration
+  
 - 🐛 **Fixed** PHPStan config to remove non-existent database path
+  
 - 📚 **Updated** CLAUDE.md with interface pattern documentation
+  
 
 #### Breaking Changes
 
@@ -39,6 +92,7 @@ Implemented interface-based dependency injection pattern and removed unused scaf
   ```bash
   composer require apo-bozdag/isyerim-pos
 
+
   ```
 Upgrade from v1.0.2
 
@@ -46,6 +100,7 @@ Simply update your composer dependencies:
 
   ```bash
   composer update apo-bozdag/isyerim-pos
+
 
   ```
 Your existing code will continue to work without any changes.
@@ -74,6 +129,7 @@ Fixed PHP 8.2 compatibility by downgrading Pest test framework.
   composer require apo-bozdag/isyerim-pos
 
 
+
   ```
 ### 📚 Documentation
 
@@ -85,6 +141,7 @@ Simply update your composer dependencies:
 
   ```bash
   composer update apo-bozdag/isyerim-pos
+
 
 
   ```
